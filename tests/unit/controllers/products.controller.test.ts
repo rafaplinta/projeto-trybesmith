@@ -6,6 +6,8 @@ import { Request, Response } from 'express';
 import productsMock from '../../mocks/products.mock';
 import productsService from '../../../src/services/products.service';
 import productsController from '../../../src/controllers/products.controller';
+import UserModel from '../../../src/database/models/user.model';
+import ProductModel from '../../../src/database/models/product.model';
 
 chai.use(sinonChai);
 
@@ -74,6 +76,33 @@ describe('ProductsController', function () {
   
       expect(res.status).to.have.been.calledWith(400);
       expect(res.json).to.have.been.calledWith({ message: 'OrderId is required' });
+    });
+  });
+
+  describe('#findAll', function () {
+    it('retorna todos os produtos com sucesso', async function () {
+      const mockReturn = [
+        ProductModel.build({
+          id: 1,
+          name: 'Pedra Filosofal',
+          price: '20 gold',
+          orderId: 1
+        }),
+        ProductModel.build({
+          id: 2,
+          name: 'Lança do Destino',
+          price: '100 diamond',
+          orderId: 2
+        })];
+      sinon.stub(productsService, 'findAll').resolves({
+        status: 'SUCCESSFUL',
+        data: mockReturn,
+      });
+
+      await productsController.findAll(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(mockReturn);
     });
   });
 });

@@ -25,8 +25,24 @@ const noPriceProductBody = {
 
 const noOrderIdProductBody = {
   name: 'Martelo de Thor',
-  price: '30 peças de ouro'
+  price: '30 peças de ouro',
+  orderId: null
 };
+
+const findAllReturn = [
+  {
+    id: 1,
+    name: 'Pedra Filosofal',
+    price: '20 gold',
+    orderId: 1
+  },
+  {
+    id: 2,
+    name: 'Lança do Destino',
+    price: '100 diamond',
+    orderId: 2
+  }
+]
 
 export default {
   noNameProductBody,
@@ -34,4 +50,5 @@ export default {
   noOrderIdProductBody,
   newProductBody,
   newProductFromDB,
+  findAllReturn,
 };

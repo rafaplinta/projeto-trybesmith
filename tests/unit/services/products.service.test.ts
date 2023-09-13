@@ -33,11 +33,34 @@ describe('ProductsService', function () {
       expect(serviceResponse.data).to.deep.eq({ message: "Price is required"});
     });
       
-    // it('retorne um erro quando o orderId não é enviado', async function () {
-    //   const serviceResponse = await productsService.create(productsMock.noOrderIdProductBody);
+    it('retorne um erro quando o orderId não é enviado', async function () {
+      const serviceResponse = await productsService.create(productsMock.noOrderIdProductBody);
 
-    //   expect(serviceResponse.status).to.eq('INVALID_DATA');
-    //   expect(serviceResponse.data).to.deep.eq({ message: "OrderId is required"});
-    // });
+      expect(serviceResponse.status).to.eq('INVALID_DATA');
+      expect(serviceResponse.data).to.deep.eq({ message: "OrderId is required"});
+    });
+  });
+
+  describe('#findAll', function () {
+    it('retorne todos os produtos cadastrados com sucesso', async function () {
+      const mockReturn = [
+      ProductModel.build({
+        id: 1,
+        name: 'Pedra Filosofal',
+        price: '20 gold',
+        orderId: 1
+      }),
+      ProductModel.build({
+        id: 2,
+        name: 'Lança do Destino',
+        price: '100 diamond',
+        orderId: 2
+      })];
+      sinon.stub(ProductModel, 'findAll').resolves(mockReturn);
+      const serviceResponse = await productsService.findAll();
+
+      expect(serviceResponse.status).to.eq('SUCCESSFUL');
+      expect(serviceResponse.data).to.deep.eq(mockReturn);
+    });
   });
 });
