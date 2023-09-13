@@ -6,7 +6,6 @@ import { Request, Response } from 'express';
 import productsMock from '../../mocks/products.mock';
 import productsService from '../../../src/services/products.service';
 import productsController from '../../../src/controllers/products.controller';
-import UserModel from '../../../src/database/models/user.model';
 import ProductModel from '../../../src/database/models/product.model';
 
 chai.use(sinonChai);
