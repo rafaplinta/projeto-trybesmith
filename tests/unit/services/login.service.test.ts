@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import loginsMocks from '../../mocks/logins.mocks';
 import loginService from '../../../src/services/login.services';
 import UserModel from '../../../src/database/models/user.model';
+import bcrypt from 'bcryptjs';
 
 describe('LoginService', function () {
   beforeEach(function () { sinon.restore(); });
@@ -41,20 +42,28 @@ describe('LoginService', function () {
         expect(serviceResponse.data).to.deep.eq({ message: invalidUsernameOrPassword }); 
       });
 
-      // it('ao receber uma password inexistente, retorne um erro', async function () {
-      //   const findOneReturn = UserModel.build({
-      //     username: 'Hagar',
-      //     password: 'terrível',
-      //     id: 1,
-      //   })
-      //   sinon.stub(UserModel, 'findOne').resolves(null);
+      it('ao receber uma password inexistente, retorne um erro', async function () {
+        const findOneReturn = UserModel.build(loginsMocks.existingUser);
+        sinon.stub(UserModel, 'findOne').resolves(findOneReturn);
 
-      //   const parameters = loginsMocks.unexistentUsername;
-      //   const serviceResponse = await loginService.verifyLogin(parameters);
+        const parameters = loginsMocks.unexistentUsername;
+        const serviceResponse = await loginService.verifyLogin(parameters);
 
-      //   expect(serviceResponse.status).to.eq('UNAUTHORIZED');
-      //   expect(serviceResponse.data).not.to.have.key('token');
-      //   expect(serviceResponse.data).to.deep.eq({ message: invalidUsernameOrPassword }); 
-      // });
+        expect(serviceResponse.status).to.eq('UNAUTHORIZED');
+        expect(serviceResponse.data).not.to.have.key('token');
+        expect(serviceResponse.data).to.deep.eq({ message: invalidUsernameOrPassword }); 
+      });
+
+      it('ao receber um username e uma senha válida, retorna um token de login', async function () {
+        const parameters = loginsMocks.validUser;
+        const findOneReturn = UserModel.build(loginsMocks.existingUser);
+        sinon.stub(UserModel, 'findOne').resolves(findOneReturn);
+        sinon.stub(bcrypt, 'compareSync').resolves(true); // MUITO obrigada ao Allex - Turma 28B que, durante a mentoria, me cantou essa bola!
+
+        const serviceResponse = await loginService.verifyLogin(parameters);
+    
+        expect(serviceResponse.status).to.eq('SUCCESSFUL');
+        expect(serviceResponse.data).to.have.key('token');
+      });
     });
 });
