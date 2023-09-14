@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import loginsMocks from '../../mocks/logins.mocks';
-import loginService from '../../../src/services/login.services';
+import loginService from '../../../src/services/login.service';
 import UserModel from '../../../src/database/models/user.model';
 import bcrypt from 'bcryptjs';
 

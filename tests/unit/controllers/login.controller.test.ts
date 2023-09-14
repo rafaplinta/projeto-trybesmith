@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 
 import loginsMocks from '../../mocks/logins.mocks';
 import { ServiceResponse } from '../../../src/types/ServiceResponse';
-import loginService from '../../../src/services/login.services';
+import loginService from '../../../src/services/login.service';
 import loginController from '../../../src/controllers/login.controller';
 import { Token } from '../../../src/types/Token';
 

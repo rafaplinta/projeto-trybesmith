@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import mapStatusHTTP from '../utils/mapStatusHTTP';
-import loginServices from '../services/login.services';
+import loginServices from '../services/login.service';
 
 async function login(req: Request, res: Response) {
   const serviceResponse = await loginServices.verifyLogin(req.body);

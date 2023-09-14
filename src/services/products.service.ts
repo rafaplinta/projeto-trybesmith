@@ -6,30 +6,30 @@ import ProductModel, {
   ProductSequelizeModel,
 } from '../database/models/product.model';
 
-function validateParams({
-  name,
-  price,
-  orderId,
-}: ProductInputtableTypes): string | null {
-  if (!name) return 'Name is required';
-  if (!price) return 'Price is required';
-  if (!orderId) return 'OrderId is required';
-  return null;
-}
+// function validateParams({
+//   name,
+//   price,
+//   orderId,
+// }: ProductInputtableTypes): string | null {
+//   if (!name) return '"name" is required';
+//   if (!price) return '"price" is required';
+//   if (!orderId) return 'OrderId is required';
+//   return null;
+// }
 
 async function create(product: ProductInputtableTypes): Promise<ServiceResponse<Product>> {
-  let responseService: ServiceResponse<Product>;
-  const error = validateParams(product);
+  // let responseService: ServiceResponse<Product>;
+  // const error = validateParams(product);
 
-  if (error) {
-    responseService = { status: 'INVALID_DATA', data: { message: error } };
-    return responseService;
-  }
+  // if (error) {
+  //   responseService = { status: 'INVALID_DATA', data: { message: error } };
+  //   return responseService;
+  // }
 
   const newProduct = await ProductModel.create(product);
-  responseService = { status: 'SUCCESSFUL', data: newProduct.dataValues };
+  return { status: 'SUCCESSFUL', data: newProduct.dataValues };
 
-  return responseService;
+  // return responseService;
 }
 
 async function findAll(): Promise<ServiceResponse<ProductSequelizeModel[]>> {
