@@ -1,15 +1,25 @@
-// import { ServiceResponse } from '../types/ServiceResponse';
+import { ServiceResponse } from '../types/ServiceResponse';
+import OrderModel from '../database/models/order.model'; 
+import ProductModel from '../database/models/product.model';
+import { ReturnedOrder } from '../types/Order';
 
-// import OrderModel, { OrderSequelizeModel } from '../database/models/order.model';
-// import ProductModel from '../database/models/product.model';
+async function findAll(): Promise<ServiceResponse<ReturnedOrder[]>> { 
+  const orders = await OrderModel.findAll({
+    include: { 
+      model: ProductModel, 
+      as: 'productIds',
+      attributes: ['id'],
+    } });
 
-// async function findAll(): Promise<ServiceResponse<OrderSequelizeModel[]>> {
-//   const orders = await OrderModel.findAll({ 
-//     include: { model: ProductModel, as: 'productId', attributes: ['id'] },
-//   });
-//   return { status: 'SUCCESSFUL', data: orders };
-// }
+  const orderMap = orders.map(({ dataValues }) => ({
+    id: dataValues.id,
+    userId: dataValues.userId,
+    productIds: dataValues.productIds?.map((product) => product.id),
+  }));
 
-// export default {
-//   findAll,
-// };
+  return { status: 'SUCCESSFUL', data: orderMap }; 
+}
+
+export default {
+  findAll,
+};
