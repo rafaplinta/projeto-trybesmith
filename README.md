@@ -1,10 +1,4 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# :construction: Projeto Trybesmith - Criação de API :construction:
+O projeto Trybesmith foi desenvolvido como durante o módulo de back-end do curso de Desenvolvimento Web da Trybe. 
+O objetivo foi criar uma loja de itens medievais no formato de uma API, utilizando Sequelize e TypeScript. 
+Durante o projeto, desenvolvi endpoints para criação, leitura e atualização de informações, rotas que utilizavam JSON Web Token (JWT) para autenticação e testes unitários utilizando chai, sinon e sinon-chai. 
